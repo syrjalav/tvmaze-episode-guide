@@ -6,6 +6,12 @@ A small, responsive show search and episode guide powered by the public TVmaze A
 
 No API key, build step, or dependency install is required.
 
+### Quickest: open one file
+
+Download `Episode-Atlas-Standalone.html` from this repository and open it in your browser. It contains the HTML, CSS, and JavaScript in one file, so there is no installation or local server to start. Keep an internet connection on so it can request show data from TVmaze.
+
+### Run the project files
+
 1. Download or clone this repository.
 2. Open `index.html` in a modern browser. If your browser blocks local file requests, open a terminal in this folder and run `python3 -m http.server 8000`, then visit `http://localhost:8000`.
 3. Type a show name, choose a result with the arrow keys (or click it), and press Enter.
