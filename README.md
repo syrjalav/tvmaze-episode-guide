@@ -6,8 +6,8 @@ A small, responsive show search and episode guide powered by the public TVmaze A
 
 No API key, build step, or dependency install is required.
 
-1. Download or clone the `tvmaze-episode-guide` branch of the class repository.
-2. Open `tvmaze-episode-guide/index.html` in a modern browser. If your browser blocks local file requests, open a terminal in the `tvmaze-episode-guide` folder and run `python3 -m http.server 8000`, then visit `http://localhost:8000`.
+1. Download or clone this repository.
+2. Open `index.html` in a modern browser. If your browser blocks local file requests, open a terminal in this folder and run `python3 -m http.server 8000`, then visit `http://localhost:8000`.
 3. Type a show name, choose a result with the arrow keys (or click it), and press Enter.
 
 ## How the API flow works
