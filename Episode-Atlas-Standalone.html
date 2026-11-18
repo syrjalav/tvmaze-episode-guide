@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101821" />
+    <title>Episode Atlas — TVmaze show guide</title>
+    <link rel="preconnect" href="https://api.tvmaze.com" />
+    <style>
+
+:root{color-scheme:dark;--bg:#101821;--panel:#17232d;--panel2:#1b2a34;--line:#2d3b44;--text:#f3f4ed;--muted:#9ba9aa;--mint:#c4f06d;--orange:#ffad72;--serif:'Space Grotesk',sans-serif;--body:'DM Sans',sans-serif;--mono:'DM Mono',monospace}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#20343d 0,transparent 48%),var(--bg);color:var(--text);font-family:var(--body);min-height:100vh}.page-shell{max-width:1100px;margin:auto;padding:0 32px}.topbar{height:82px;border-bottom:1px solid #ffffff12;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;gap:11px;align-items:center;color:var(--text);font:600 12px var(--mono);letter-spacing:.13em;text-decoration:none}.brand-mark{display:grid;place-items:center;width:31px;height:31px;border:1px solid var(--mint);color:var(--mint);font:500 11px var(--mono);letter-spacing:-.04em}.api-status,.eyebrow,.search-hint,.season-filter-wrap,footer,.count-pill{font-family:var(--mono);font-size:10px;letter-spacing:.1em}.api-status{color:#b8c3be;display:flex;align-items:center;gap:9px}.status-dot{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px #c4f06d88}.intro{max-width:710px;margin:84px auto 54px;text-align:center}.eyebrow{color:var(--mint);margin:0 0 17px}.intro h1{font:500 clamp(42px,7vw,72px)/.99 var(--serif);letter-spacing:-.065em;margin:0}.intro h1 span{color:var(--mint)}.intro-copy{color:#adbbbc;font-size:15px;margin:22px auto 30px;max-width:480px;line-height:1.6}.search-form{height:64px;position:relative;display:flex;align-items:center;text-align:left;border:1px solid #64736f;background:#15222b;box-shadow:0 10px 40px #0003;padding:0 16px;z-index:2}.search-icon{font-size:28px;color:var(--mint);margin:0 12px 4px 2px;transform:rotate(-20deg)}.search-form input{color:var(--text);font:15px var(--body);background:none;border:0;outline:0;flex:1;min-width:0}.search-form input::placeholder{color:#718184}.search-form kbd{font:10px var(--mono);color:#9da9a9;border:1px solid #40505a;border-radius:3px;padding:6px 8px}.search-hint{color:#859495;letter-spacing:.015em;margin:12px 0}.search-results{position:absolute;left:-1px;right:-1px;top:calc(100% + 4px);max-height:370px;overflow:auto;list-style:none;padding:5px;margin:0;background:#1b2932;border:1px solid #52625e;box-shadow:0 18px 36px #0008}.search-result{width:100%;border:0;background:none;color:var(--text);padding:12px;display:flex;align-items:center;gap:13px;text-align:left;cursor:pointer}.search-result:hover,.search-result[aria-selected=true]{background:#293943}.result-image{width:38px;height:51px;object-fit:cover;background:#33414a}.result-image.empty{display:grid;place-items:center;color:#859495;font:10px var(--mono)}.result-copy{flex:1}.result-name{display:block;font-weight:600;font-size:14px}.result-meta{display:block;color:#9ba9aa;font:10px var(--mono);margin-top:5px}.result-arrow{color:var(--mint);font-size:18px}.show-panel{margin:35px 0 80px}.show-summary{min-height:240px;display:grid;grid-template-columns:170px 1fr;gap:30px;padding:27px;background:linear-gradient(115deg,#23343b,#17232d 70%);border:1px solid var(--line);position:relative;overflow:hidden}.show-summary:after{content:"";position:absolute;width:290px;height:290px;border:1px solid #ffffff0a;border-radius:50%;right:-75px;top:-165px;box-shadow:0 0 0 30px #ffffff04,0 0 0 60px #ffffff03}.poster{width:170px;height:235px;object-fit:cover;background:#30404a;position:relative;z-index:1}.poster.empty{display:grid;place-items:center;color:#9da9a9;font:11px var(--mono)}.show-info{position:relative;z-index:1;align-self:center}.show-info .eyebrow{margin-bottom:10px}.show-info h2{font:500 clamp(28px,4vw,44px)/1.05 var(--serif);letter-spacing:-.045em;margin:0 0 12px}.show-meta{display:flex;gap:10px;flex-wrap:wrap;color:#c0c9c6;font:10px var(--mono);letter-spacing:.05em}.show-meta span+span:before{content:'·';color:var(--mint);padding-right:10px}.show-summary-text{color:#acb8b6;font-size:13px;line-height:1.65;max-width:650px;margin:18px 0}.tvmaze-link{color:var(--mint);font:10px var(--mono);text-decoration:none;border-bottom:1px solid #c4f06d55;padding-bottom:3px}.episodes-heading{display:flex;justify-content:space-between;align-items:end;margin:51px 0 20px}.episodes-heading .eyebrow{margin:0 0 7px}.episodes-heading h2{font:500 30px var(--serif);letter-spacing:-.04em;margin:0}.count-pill{color:#b7c0bb;background:#26353d;padding:5px 8px;vertical-align:middle;margin-left:7px}.season-filter-wrap{color:#9ba9aa;display:flex;align-items:center;gap:11px}.season-filter-wrap select{appearance:none;color:var(--text);background:#1b2932;border:1px solid #41515a;padding:10px 31px 10px 12px;font:11px var(--mono);background-image:linear-gradient(45deg,transparent 50%,var(--mint) 50%),linear-gradient(135deg,var(--mint) 50%,transparent 50%);background-position:calc(100% - 14px) 15px,calc(100% - 10px) 15px;background-size:4px 4px;background-repeat:no-repeat}.episode-list{border-top:1px solid var(--line)}.episode-card{display:grid;grid-template-columns:75px 1fr 115px;gap:20px;align-items:center;padding:18px 13px;border-bottom:1px solid var(--line);transition:background .15s}.episode-card:hover{background:#ffffff06}.episode-number{font:11px var(--mono);color:var(--mint)}.episode-main h3{font-size:14px;font-weight:600;margin:0 0 7px}.episode-main p{font-size:12px;line-height:1.5;color:#9ba9aa;margin:0;max-width:650px}.episode-date{color:#9ba9aa;font:10px var(--mono);text-align:right}.episode-runtime{display:block;margin-top:5px;color:#708080}.notice{max-width:700px;margin:0 auto 45px;padding:16px 18px;border:1px solid #46564e;background:#17251f;color:#c8d5cf;font-size:13px;line-height:1.6}.notice.error{border-color:#784d43;background:#291e1d;color:#ffd2bf}.notice.loading{color:var(--mint)}footer{display:flex;justify-content:space-between;color:#788889;border-top:1px solid #ffffff12;padding:23px 0 30px;font-size:9px;letter-spacing:.03em}footer a{color:var(--mint);text-decoration:none}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:640px){.page-shell{padding:0 18px}.topbar{height:67px}.api-status{font-size:8px}.intro{margin:65px auto 37px}.intro-copy{font-size:13px}.search-form{height:58px;padding:0 11px}.search-form input{font-size:13px}.search-form kbd{display:none}.show-summary{grid-template-columns:100px 1fr;gap:16px;padding:17px}.poster{width:100px;height:145px}.show-summary{min-height:180px}.show-info h2{font-size:26px}.show-summary-text{font-size:11px;margin:12px 0}.show-meta{gap:6px;font-size:9px}.show-meta span+span:before{padding-right:6px}.episodes-heading{align-items:start;gap:15px;flex-direction:column;margin-top:40px}.episode-card{grid-template-columns:56px 1fr;gap:10px;padding:15px 5px}.episode-date{grid-column:2;text-align:left}.episode-main p{font-size:11px}footer{gap:12px;line-height:1.5;flex-direction:column}}
+    </style>
+
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Episode Atlas home"><span class="brand-mark">EA</span><span>EPISODE ATLAS</span></a>
+        <span class="api-status"><span class="status-dot"></span> LIVE TVMAZE DATA</span>
+      </header>
+
+      <section class="intro" id="top" aria-labelledby="page-title">
+        <p class="eyebrow">YOUR NEXT BINGE, MAPPED</p>
+        <h1 id="page-title">Find a show.<br /><span>Explore every episode.</span></h1>
+        <p class="intro-copy">Search the TVmaze catalogue, choose the right match, and browse its episode guide.</p>
+
+        <form id="search-form" class="search-form" role="search" autocomplete="off">
+          <label class="visually-hidden" for="show-search">Search TV shows</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="show-search" name="show" type="search" placeholder="Try “The Bear” or “Severance”…" aria-controls="search-results" aria-autocomplete="list" aria-expanded="false" />
+          <kbd>ENTER ↵</kbd>
+          <ul id="search-results" class="search-results" role="listbox" aria-label="Show search results" hidden></ul>
+        </form>
+        <p class="search-hint" id="search-hint">Type at least 2 letters. Use ↑ ↓ to choose a result, then press Enter.</p>
+      </section>
+
+      <section id="notice" class="notice" aria-live="polite" hidden></section>
+      <section id="show-panel" class="show-panel" aria-live="polite" hidden>
+        <div id="show-summary" class="show-summary"></div>
+        <div class="episodes-heading">
+          <div><p class="eyebrow">THE COMPLETE GUIDE</p><h2>Episodes <span id="episode-count" class="count-pill"></span></h2></div>
+          <label class="season-filter-wrap" for="season-filter">Season <select id="season-filter"><option value="all">All seasons</option></select></label>
+        </div>
+        <div id="episode-list" class="episode-list"></div>
+      </section>
+
+      <footer><span>Show and episode data by <a href="https://www.tvmaze.com/" target="_blank" rel="noreferrer">TVmaze</a></span><span>Built as an API learning project</span></footer>
+    </main>
+    <script>
+const API = 'https://api.tvmaze.com';
+const form = document.querySelector('#search-form');
+const input = document.querySelector('#show-search');
+const resultsList = document.querySelector('#search-results');
+const hint = document.querySelector('#search-hint');
+const notice = document.querySelector('#notice');
+const showPanel = document.querySelector('#show-panel');
+const summary = document.querySelector('#show-summary');
+const episodeList = document.querySelector('#episode-list');
+const episodeCount = document.querySelector('#episode-count');
+const seasonFilter = document.querySelector('#season-filter');
+
+let matches = [];
+let activeIndex = -1;
+let debounceTimer;
+let searchController;
+let episodeController;
+let lastEpisodes = [];
+
+function setNotice(message = '', kind = '') {
+  notice.textContent = message;
+  notice.className = `notice ${kind}`.trim();
+  notice.hidden = !message;
+}
+
+function cleanText(html = '') {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
+}
+
+function yearOf(show) {
+  const start = show.premiered?.slice(0, 4) || 'Year unknown';
+  const end = show.ended?.slice(0, 4) || (show.status === 'Running' ? 'Present' : '');
+  return end ? `${start}–${end}` : start;
+}
+
+function imageUrl(image) {
+  return image?.medium || image?.original || '';
+}
+
+function openResults() {
+  resultsList.hidden = matches.length === 0;
+  input.setAttribute('aria-expanded', String(!resultsList.hidden));
+}
+
+function renderResults() {
+  resultsList.replaceChildren();
+  matches.slice(0, 7).forEach((match, index) => {
+    const show = match.show;
+    const item = document.createElement('li');
+    item.setAttribute('role', 'option');
+    item.id = `show-option-${index}`;
+    item.setAttribute('aria-selected', String(index === activeIndex));
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'search-result';
+    const src = imageUrl(show.image);
+    if (src) {
+      const image = document.createElement('img');
+      image.className = 'result-image';
+      image.src = src;
+      image.alt = '';
+      image.loading = 'lazy';
+      button.append(image);
+    } else {
+      const empty = document.createElement('span');
+      empty.className = 'result-image empty';
+      empty.textContent = 'NO ART';
+      button.append(empty);
+    }
+    const copy = document.createElement('span');
+    copy.className = 'result-copy';
+    const name = document.createElement('span');
+    name.className = 'result-name';
+    name.textContent = show.name;
+    const meta = document.createElement('span');
+    meta.className = 'result-meta';
+    meta.textContent = `${yearOf(show)}  ·  ${show.network?.name || show.webChannel?.name || 'Network unknown'}  ·  TVMAZE ID ${show.id}`;
+    copy.append(name, meta);
+    const arrow = document.createElement('span');
+    arrow.className = 'result-arrow';
+    arrow.textContent = '↗';
+    button.append(copy, arrow);
+    button.addEventListener('click', () => loadShow(show.id));
+    item.append(button);
+    resultsList.append(item);
+  });
+  openResults();
+}
+
+async function searchShows(query) {
+  searchController?.abort();
+  searchController = new AbortController();
+  const controller = searchController;
+  setNotice('Searching the TVmaze catalogue…', 'loading');
+  try {
+    const response = await fetch(`${API}/search/shows?q=${encodeURIComponent(query)}`, { signal: controller.signal });
+    if (!response.ok) throw new Error(`TVmaze returned ${response.status}.`);
+    matches = await response.json();
+    activeIndex = matches.length ? 0 : -1;
+    renderResults();
+    setNotice(matches.length ? '' : `No matches for “${query}”. Try another title.`);
+    hint.textContent = matches.length ? `${matches.length} matching shows. Choose the correct version; names can refer to different shows.` : 'Try a shorter or alternate title.';
+  } catch (error) {
+    if (error.name === 'AbortError') return;
+    matches = [];
+    renderResults();
+    setNotice('The show search could not be loaded. Check your connection and try again.', 'error');
+  }
+}
+
+function renderShow(show) {
+  summary.replaceChildren();
+  const posterUrl = imageUrl(show.image);
+  if (posterUrl) {
+    const poster = document.createElement('img');
+    poster.className = 'poster';
+    poster.src = posterUrl;
+    poster.alt = `${show.name} poster`;
+    summary.append(poster);
+  } else {
+    const poster = document.createElement('div');
+    poster.className = 'poster empty';
+    poster.textContent = 'NO POSTER';
+    summary.append(poster);
+  }
+  const info = document.createElement('div');
+  info.className = 'show-info';
+  const label = document.createElement('p');
+  label.className = 'eyebrow';
+  label.textContent = `TVMAZE SHOW ID  ${show.id}`;
+  const title = document.createElement('h2');
+  title.textContent = show.name;
+  const meta = document.createElement('div');
+  meta.className = 'show-meta';
+  [yearOf(show), show.network?.name || show.webChannel?.name, show.genres?.slice(0, 2).join(' / '), show.status].filter(Boolean).forEach(text => {
+    const span = document.createElement('span');
+    span.textContent = text;
+    meta.append(span);
+  });
+  const description = document.createElement('p');
+  description.className = 'show-summary-text';
+  description.textContent = cleanText(show.summary) || 'No show description is available.';
+  const link = document.createElement('a');
+  link.className = 'tvmaze-link';
+  link.href = show.url || `https://www.tvmaze.com/shows/${show.id}`;
+  link.target = '_blank';
+  link.rel = 'noreferrer';
+  link.textContent = 'MORE ON TVMAZE ↗';
+  info.append(label, title, meta, description, link);
+  summary.append(info);
+}
+
+function renderEpisodes() {
+  const season = seasonFilter.value;
+  const visible = lastEpisodes.filter(episode => season === 'all' || String(episode.season) === season);
+  episodeCount.textContent = `${visible.length}`;
+  episodeList.replaceChildren();
+  if (!visible.length) {
+    const empty = document.createElement('p');
+    empty.className = 'notice';
+    empty.textContent = 'No episodes are listed for this season yet.';
+    episodeList.append(empty);
+    return;
+  }
+  visible.forEach(episode => {
+    const card = document.createElement('article');
+    card.className = 'episode-card';
+    const number = document.createElement('div');
+    number.className = 'episode-number';
+    number.textContent = `S${String(episode.season).padStart(2, '0')} · E${String(episode.number ?? '—').padStart(2, '0')}`;
+    const main = document.createElement('div');
+    main.className = 'episode-main';
+    const title = document.createElement('h3');
+    title.textContent = episode.name || 'Untitled episode';
+    const description = document.createElement('p');
+    description.textContent = cleanText(episode.summary) || 'No episode description is available.';
+    main.append(title, description);
+    const date = document.createElement('div');
+    date.className = 'episode-date';
+    date.textContent = episode.airdate ? new Date(`${episode.airdate}T00:00:00`).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Air date unknown';
+    const runtime = document.createElement('span');
+    runtime.className = 'episode-runtime';
+    runtime.textContent = episode.runtime ? `${episode.runtime} min` : '';
+    date.append(runtime);
+    card.append(number, main, date);
+    episodeList.append(card);
+  });
+}
+
+async function loadShow(showId) {
+  searchController?.abort();
+  episodeController?.abort();
+  episodeController = new AbortController();
+  const controller = episodeController;
+  matches = [];
+  resultsList.replaceChildren();
+  openResults();
+  showPanel.hidden = false;
+  setNotice('Loading the selected show and its episode guide…', 'loading');
+  episodeList.replaceChildren();
+  try {
+    const [showResponse, episodesResponse] = await Promise.all([
+      fetch(`${API}/shows/${encodeURIComponent(showId)}`, { signal: controller.signal }),
+      fetch(`${API}/shows/${encodeURIComponent(showId)}/episodes`, { signal: controller.signal })
+    ]);
+    if (!showResponse.ok || !episodesResponse.ok) throw new Error('TVmaze could not return this show right now.');
+    const [show, episodes] = await Promise.all([showResponse.json(), episodesResponse.json()]);
+    renderShow(show);
+    lastEpisodes = episodes;
+    const seasons = [...new Set(episodes.map(episode => episode.season))].sort((a, b) => a - b);
+    seasonFilter.replaceChildren(new Option('All seasons', 'all'));
+    seasons.forEach(season => seasonFilter.add(new Option(`Season ${season}`, String(season))));
+    seasonFilter.value = 'all';
+    renderEpisodes();
+    setNotice('');
+    showPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (error) {
+    if (error.name === 'AbortError') return;
+    setNotice('The episode guide could not be loaded. Please try again in a moment.', 'error');
+  }
+}
+
+input.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  searchController?.abort();
+  episodeController?.abort();
+  showPanel.hidden = true;
+  matches = [];
+  activeIndex = -1;
+  resultsList.replaceChildren();
+  openResults();
+  const query = input.value.trim();
+  if (query.length < 2) {
+    setNotice('');
+    hint.textContent = 'Type at least 2 letters. Use ↑ ↓ to choose a result, then press Enter.';
+    return;
+  }
+  debounceTimer = setTimeout(() => searchShows(query), 300);
+});
+
+input.addEventListener('keydown', event => {
+  if (event.key === 'ArrowDown' && matches.length) {
+    event.preventDefault();
+    activeIndex = (activeIndex + 1) % Math.min(matches.length, 7);
+    renderResults();
+    document.querySelector(`#show-option-${activeIndex} button`)?.scrollIntoView({ block: 'nearest' });
+  } else if (event.key === 'ArrowUp' && matches.length) {
+    event.preventDefault();
+    activeIndex = (activeIndex - 1 + Math.min(matches.length, 7)) % Math.min(matches.length, 7);
+    renderResults();
+    document.querySelector(`#show-option-${activeIndex} button`)?.scrollIntoView({ block: 'nearest' });
+  } else if (event.key === 'Enter') {
+    event.preventDefault();
+    if (matches.length && activeIndex >= 0) loadShow(matches[activeIndex].show.id);
+    else if (input.value.trim().length >= 2) {
+      clearTimeout(debounceTimer);
+      searchShows(input.value.trim());
+    }
+  } else if (event.key === 'Escape') {
+    resultsList.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+  }
+});
+
+form.addEventListener('submit', event => event.preventDefault());
+seasonFilter.addEventListener('change', renderEpisodes);
+document.addEventListener('click', event => {
+  if (!form.contains(event.target)) {
+    resultsList.hidden = true;
+    input.setAttribute('aria-expanded', 'false');
+  }
+});
+
+    </script>
+  </body>
+</html>
