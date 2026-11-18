@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101821" />
+    <title>Episode Atlas — TVmaze show guide</title>
+    <link rel="preconnect" href="https://api.tvmaze.com" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Episode Atlas home"><span class="brand-mark">EA</span><span>EPISODE ATLAS</span></a>
+        <span class="api-status"><span class="status-dot"></span> LIVE TVMAZE DATA</span>
+      </header>
+
+      <section class="intro" id="top" aria-labelledby="page-title">
+        <p class="eyebrow">YOUR NEXT BINGE, MAPPED</p>
+        <h1 id="page-title">Find a show.<br /><span>Explore every episode.</span></h1>
+        <p class="intro-copy">Search the TVmaze catalogue, choose the right match, and browse its episode guide.</p>
+
+        <form id="search-form" class="search-form" role="search" autocomplete="off">
+          <label class="visually-hidden" for="show-search">Search TV shows</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="show-search" name="show" type="search" placeholder="Try “The Bear” or “Severance”…" aria-controls="search-results" aria-autocomplete="list" aria-expanded="false" />
+          <kbd>ENTER ↵</kbd>
+          <ul id="search-results" class="search-results" role="listbox" aria-label="Show search results" hidden></ul>
+        </form>
+        <p class="search-hint" id="search-hint">Type at least 2 letters. Use ↑ ↓ to choose a result, then press Enter.</p>
+      </section>
+
+      <section id="notice" class="notice" aria-live="polite" hidden></section>
+      <section id="show-panel" class="show-panel" aria-live="polite" hidden>
+        <div id="show-summary" class="show-summary"></div>
+        <div class="episodes-heading">
+          <div><p class="eyebrow">THE COMPLETE GUIDE</p><h2>Episodes <span id="episode-count" class="count-pill"></span></h2></div>
+          <label class="season-filter-wrap" for="season-filter">Season <select id="season-filter"><option value="all">All seasons</option></select></label>
+        </div>
+        <div id="episode-list" class="episode-list"></div>
+      </section>
+
+      <footer><span>Show and episode data by <a href="https://www.tvmaze.com/" target="_blank" rel="noreferrer">TVmaze</a></span><span>Built as an API learning project</span></footer>
+    </main>
+  </body>
+</html>
