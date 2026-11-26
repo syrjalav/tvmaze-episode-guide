@@ -85,6 +85,7 @@ The tests use Node's built-in runner and syntax checker; no package installation
 | `Episode-Atlas-Standalone.html` | Downloadable single-file version |
 | `tests/smoke.test.mjs` | Dependency-free structural checks |
 | `package.json` | Test command only; there are no installed packages |
+| `AUDIT.md` | Sanitized publication audit, fixes, and repeat checks |
 
 ## Learning, challenge, and solution
 

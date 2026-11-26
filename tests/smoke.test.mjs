@@ -51,3 +51,14 @@ test("the standalone file contains its own style and script", async () => {
   assert.doesNotMatch(standalone, /<script[^>]+src=/i);
   assert.doesNotMatch(standalone, /<link[^>]+rel=["']stylesheet["']/i);
 });
+
+test("the standalone copy stays in sync with the split files", async () => {
+  const [standalone, script, stylesheet] = await Promise.all([
+    read("Episode-Atlas-Standalone.html"),
+    read("app.js"),
+    read("styles.css")
+  ]);
+  const bundledStyles = stylesheet.replace(/^@import[^\n]+\n+/, "").trim();
+  assert.ok(standalone.includes(script.trim()), "standalone JavaScript is out of sync");
+  assert.ok(standalone.includes(bundledStyles), "standalone CSS is out of sync");
+});
