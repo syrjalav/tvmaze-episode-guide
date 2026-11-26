@@ -1,0 +1,10 @@
+{
+  "name": "episode-atlas-tvmaze-guide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A dependency-free TVmaze show search and episode guide",
+  "scripts": {
+    "test": "node --test tests/smoke.test.mjs && node --check app.js"
+  }
+}
+

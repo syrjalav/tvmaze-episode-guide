@@ -1,42 +1,116 @@
-# Episode Atlas
+# Episode Atlas - TVmaze API guide
 
-A small, responsive show search and episode guide powered by the public TVmaze API. Search by show name, pick the right show from the results, and load its episodes using the TVmaze show ID.
+A responsive show search and episode guide powered by the public [TVmaze API](https://www.tvmaze.com/api). Search by title, choose the correct show, and browse its episodes using TVmaze's stable show ID.
 
-## Run it
+![Episode Atlas showing live TVmaze show information and an episode list](docs/episode-atlas-demo.png)
 
-No API key, build step, or dependency install is required.
+*The screenshot demonstrates a live API response. Show images and programme data belong to their respective owners and are supplied by TVmaze.*
+
+## Purpose
+
+This project demonstrates how a browser application can collect JSON from a third-party REST API, resolve an ambiguous text search to a stable identifier, and turn the response into an accessible episode-guide interface without a framework or API key.
+
+## Data collection
+
+The user enters a show title. After at least two characters and a 300 ms debounce, the browser sends:
+
+```text
+GET https://api.tvmaze.com/search/shows?q={query}
+```
+
+The response contains possible `show` objects. When the user chooses one, the application uses its numeric `show.id` for two parallel requests:
+
+```text
+GET https://api.tvmaze.com/shows/{id}
+GET https://api.tvmaze.com/shows/{id}/episodes
+```
+
+The JSON provides show metadata, images, summaries, and episode information. The page credits and links to TVmaze. Older in-flight searches are cancelled with `AbortController` when the query changes.
+
+## Data persistence
+
+Not applicable: the application does not save API responses or user searches. Matches and episodes are kept only in JavaScript memory for the open page. A season change filters the already loaded episode array and does not send another request. Reloading or closing the page clears all state.
+
+## User interaction
+
+1. Type at least two characters of a show name.
+2. Choose a search result with the mouse or the Up/Down arrow keys.
+3. Press Enter or click the result.
+4. Read the show summary and episode list.
+5. Use the season selector to filter the loaded episodes.
+
+Loading, empty, and error states are announced in the page. Search results expose the network, date range, and TVmaze ID so similarly named shows can be distinguished.
+
+## Setup, dependencies, configuration, and run
+
+### Requirements
+
+- A modern browser
+- Internet access to `api.tvmaze.com` and TVmaze image URLs
+- No API key, environment variables, package installation, build step, or server-side component
+- Optional: Python 3 or another static server
+- Optional: Node.js 18 or newer for the structural tests
 
 ### Quickest: open one file
 
-Download `Episode-Atlas-Standalone.html` from this repository and open it in your browser. It contains the HTML, CSS, and JavaScript in one file, so there is no installation or local server to start. Keep an internet connection on so it can request show data from TVmaze.
+Download `Episode-Atlas-Standalone.html` and open it in a browser. Its HTML, CSS, and JavaScript are contained in one file.
 
 ### Run the project files
 
-1. Download or clone this repository.
-2. Open `index.html` in a modern browser. If your browser blocks local file requests, open a terminal in this folder and run `python3 -m http.server 8000`, then visit `http://localhost:8000`.
-3. Type a show name, choose a result with the arrow keys (or click it), and press Enter.
+1. Download or clone the repository.
+2. Open `index.html` in a modern browser.
+3. If local file requests are blocked, start a static server in the repository:
 
-## How the API flow works
+   ```bash
+   python3 -m http.server 8000
+   ```
 
-1. The text in the search box is a **query**, not an identifier. After the user types at least two characters, the page waits 300 ms and sends a `GET` request to `https://api.tvmaze.com/search/shows?q=...`.
-2. TVmaze responds with JSON. Each search result has a `show` object with a stable numeric `show.id`, plus the title, year, network, genres, and image. The page displays several matches so the user can select the intended show if names are repeated or similar.
-3. When a result is selected, the page saves that result's `show.id` and sends two requests: `GET /shows/{id}` for show details and `GET /shows/{id}/episodes` for the episode array. For example, for show ID `82`, the episode request is `https://api.tvmaze.com/shows/82/episodes`.
-4. The browser parses the JSON and builds the show card and episode list. The optional season selector filters the episode data already loaded; changing seasons does not send another request.
+4. Visit `http://localhost:8000`.
 
-The search request is like asking TVmaze, “Which shows could match this text?” The ID is the unambiguous key for subsequent requests. This avoids relying on show names, which can collide. Search is debounced to reduce unnecessary requests, and older in-flight requests are cancelled when a new search starts.
+### Test
 
-## Main files
+```bash
+npm test
+```
 
-- `index.html` — page structure and accessible form controls.
-- `styles.css` — responsive visual design.
-- `app.js` — API requests, result selection, and rendering.
+The tests use Node's built-in runner and syntax checker; no package installation is required.
 
-## API and attribution
+## Project structure
 
-The project uses TVmaze's public REST API, which returns JSON and does not require an API key for these endpoints. TVmaze's API documentation describes the show search endpoint and the show episode list endpoint. The application links back to TVmaze to credit the source.
+| File | Purpose |
+| --- | --- |
+| `index.html` | Accessible page structure and controls |
+| `styles.css` | Responsive visual design |
+| `app.js` | API requests, cancellation, selection, filtering, and rendering |
+| `Episode-Atlas-Standalone.html` | Downloadable single-file version |
+| `tests/smoke.test.mjs` | Dependency-free structural checks |
+| `package.json` | Test command only; there are no installed packages |
 
-- API documentation: <https://www.tvmaze.com/api>
-- Show search: <https://api.tvmaze.com/search/shows?q=girls>
+## Learning, challenge, and solution
+
+The central challenge visible in the implementation is that a show title is not a unique identifier. The solution first presents the API's search matches and then uses the selected `show.id` for show and episode requests. The project also demonstrates debouncing, cancelling stale network work, safely converting API HTML summaries to text, rendering with `textContent`, and filtering an in-memory result without an extra API call.
+
+This is an evidence-based summary of the implementation. The student should be prepared to explain these decisions in their own words and personalize the reflection if their own learning emphasis was different.
+
+## Limitations
+
+- The application requires TVmaze and an internet connection; API outages, rate limits, caching, or schema changes can affect it.
+- There is no offline cache, favourites list, account, or cross-session history.
+- All episodes are rendered into one list, which can be long for shows with many episodes.
+- The split-file version requests font CSS from Google Fonts; system fallbacks are available, and the standalone file uses those fallbacks.
+- Automated tests check structure and syntax but do not replace a live browser/API test.
+- The standalone file duplicates the main HTML, CSS, and JavaScript and must be kept in sync when the project changes.
+
+## Assistance, tools, and external code
+
+This project was created and reviewed with assistance from ChatGPT/Codex for planning, code generation and refinement, test creation, documentation, and repository review. It uses standard HTML, CSS, JavaScript, the browser Fetch and DOM APIs, Node's built-in test runner, Google Fonts in the split-file stylesheet, and TVmaze's public API/data. No third-party JavaScript package or API key is included.
+
+## API attribution and terms
+
+- TVmaze API documentation: <https://www.tvmaze.com/api>
+- Show search example: <https://api.tvmaze.com/search/shows?q=girls>
 - Episode list example: <https://api.tvmaze.com/shows/1/episodes>
 
-The free API has rate limits and responses may be cached by TVmaze. See its current documentation for terms, rate limits, and data-use requirements. This is a learning project and is not affiliated with TVmaze.
+TVmaze documents current rate limits, caching, and data-use requirements. This learning project is not affiliated with TVmaze.
+
+Built for the Applied Programming & AI Fundamentals course.
