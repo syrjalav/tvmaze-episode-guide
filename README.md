@@ -88,9 +88,17 @@ The tests use Node's built-in runner and syntax checker; no package installation
 
 ## Learning, challenge, and solution
 
-The central challenge visible in the implementation is that a show title is not a unique identifier. The solution first presents the API's search matches and then uses the selected `show.id` for show and episode requests. The project also demonstrates debouncing, cancelling stale network work, safely converting API HTML summaries to text, rendering with `textContent`, and filtering an in-memory result without an extra API call.
+### What I learned
 
-This is an evidence-based summary of the implementation. The student should be prepared to explain these decisions in their own words and personalize the reflection if their own learning emphasis was different.
+This was my first time learning what APIs are and how they work. I learned how a project can send a request to an API, receive a JSON response, and use that data in an interface. I also learned that the same idea can be applied to many future projects that need information from an external service.
+
+### Challenge I encountered
+
+My initial knowledge of APIs was zero, so concepts such as endpoints, requests, responses, JSON, search queries, and identifiers were all new to me. One specific example was understanding why a show name is not always unique and why the selected TVmaze `show.id` is needed to request the correct episodes.
+
+### How I approached it
+
+I searched online and used ChatGPT to learn the basic API concepts and how to apply them in JavaScript. I then worked through the project step by step: first understanding the search response, then selecting the correct show ID, and finally using that ID to load and display its episode data.
 
 ## Limitations
 
